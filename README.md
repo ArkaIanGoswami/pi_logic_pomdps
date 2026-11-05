@@ -60,18 +60,7 @@ below $`\epsilon`$ therefore needs only $`n=\lceil\log_2(R/(4\tilde\kappa\epsilo
 | Cue–key–door T-maze | (P1) | `tmaze.py`, `tmaze_route.py` | `tmaze_L{L}_s{W}_m{m}` |
 | RockSample | (P2) | `rocksample.py` | `rocksample3_tight`, `rocksample5_tight` |
 | Polar maze | (P2) | `tmaze_gap.py` | `tgap_K{K}_s{s}` |
-
-<p align="center">
-  <img src="figures/tmaze_L5_s2_m1_seed0.png" alt="T-maze layout" height="300">
-  &nbsp;&nbsp;
-  <img src="figures/rocksample3_seed0.png" alt="RockSample with three rocks" height="230">
-  &nbsp;&nbsp;
-  <img src="figures/rocksample5_seed0.png" alt="RockSample with five rocks" height="230">
-</p>
-<p align="center"><sub>The T-maze with L = 5 (C cue, K keys, J junction, D doors, G goals), and RockSample with three and five rocks (S start, X exit, green good, red bad).</sub></p>
-
-The polar maze appears as the survey maze (`tmaze_gap.py`, `tgap_*`) in older notes and in the code. Every setting,
-seed and threshold of the paper is listed in **[EXPERIMENTS.md](EXPERIMENTS.md)**.
+Every setting, seed and threshold of the paper is listed in **[EXPERIMENTS.md](EXPERIMENTS.md)**.
 
 ## Install
 
