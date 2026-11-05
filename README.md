@@ -1,8 +1,4 @@
 # Policy Iteration for Logic-Constrained POMDPs under Fixed Memory Budgets
-
-This repository contains the code and the experiment configurations for the paper
-*Policy Iteration for Logic-Constrained POMDPs under Fixed Memory Budgets* (L4DC 2027, under review).
-
 The agent acts in a POMDP whose task is a temporal-logic specification $`\varphi`$. Its controller has a fixed, declared
 memory $`\mathcal Z`$ that is chosen before planning. Every value in the paper is computed exactly on the product of the
 POMDP with the automaton of $`\varphi`$, so nothing is sampled and every run is reproducible from its seed.
@@ -13,8 +9,9 @@ POMDP with the automaton of $`\varphi`$, so nothing is sampled and every run is 
     <td align="center"><img src="examples/tmaze_L5_s0_m1_memory_cue1.gif" alt="T-maze, one memory bit, cue 1" width="150"></td>
 </table>
 
-## The two problems
 
+
+## Problems
 A policy in $`\Pi`$ is time-indexed and acts on an agent state. At time $`t`$ it picks an action $`a`$ and the next memory
 state $`z`$ from the current observation $`y`$, the previous memory state $`z_-`$ and the automaton state $`q`$, with
 probability $`\pi_t(a,z\mid y,z_-,q)`$. The agent can track $`q`$ because the labels are read from the observations.
