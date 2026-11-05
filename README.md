@@ -90,29 +90,7 @@ python env_animate.py rocksample3_tight --policy runs/single/<job id>/policy_0.8
 Each run writes `runs/single/<job id>/` with `result.json` (exact $`J_\varphi`$ and $`J_r`$), `log.json` (every sweep)
 and the final policy as `.npz`.
 
-## Reproducing the paper
-
-| Result | Command | Time on 14 workers |
-|---|---|---|
-| (P1) T-maze and slack in place of memory | `python suite.py --result remark7 --workers 14` | a few minutes |
-| (P2) polar maze | `python suite.py --result prop5 --workers 14` | a few minutes |
-| (P2) RockSample, all our methods | `python suite.py --result thm6 --workers 14` | about 3 hours |
-| CGCP on three rocks and on the polar maze | `python cgcp_sarsop.py ...`, see [EXPERIMENTS.md](EXPERIMENTS.md#cgcp-with-sarsop) | about 33 minutes per threshold |
-| CGCP on five rocks | see [EXPERIMENTS.md](EXPERIMENTS.md#cgcp-with-sarsop) | 3 to 4 hours per threshold |
-| Tables, figures and in-text numbers | `python suite.py --report` and `python plot_p2.py --no-npg --cloud-ours-only` | seconds |
-
-The names after `--result` follow an older numbering of the paper. `suite.py --result all` also runs the chain of
-Example 1 (`prop4`) and the label-noise study (`lemma1`). Every runner resumes, so an interrupted command can simply be
-run again. [EXPERIMENTS.md](EXPERIMENTS.md#run-times) lists the run time of every method.
-
-<p align="center">
-  <img src="reports_p2/fig_p2_curves.png" alt="(P2) learning curves on RockSample" width="56%">
-  <img src="reports_p2/fig_p2_front.png" alt="Reward against satisfaction on RockSample" width="42%">
-</p>
-<p align="center"><sub>(P2) on RockSample. Left: the best feasible reward found within N sweeps. Right: reward against satisfaction for every two-node policy evaluated, with the median result of each method and CGCP.</sub></p>
-
 ## Repository layout
-
 | File | Contents |
 |---|---|
 | `tmaze.py`, `rocksample.py`, `tmaze_gap.py` | The environments, their labels and their automata |
