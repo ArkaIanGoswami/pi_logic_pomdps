@@ -1,4 +1,3 @@
-# pi_logic_pomdps
 # Policy Iteration for Logic-Constrained POMDPs under Fixed Memory Budgets
 
 This repository contains the code and the experiment configurations for the paper
@@ -10,17 +9,18 @@ POMDP with the automaton of $`\varphi`$, so nothing is sampled and every run is 
 
 <table>
   <tr>
-    <td align="center"><img src="examples/tmaze_L5_s0_m1_memory_cue0.gif" alt="T-maze, one memory bit, cue 0" width="150"></td>
-    <td align="center"><img src="examples/tmaze_L5_s0_m1_memory_cue1.gif" alt="T-maze, one memory bit, cue 1" width="150"></td>
-    <td align="center"><img src="examples/tmaze_L5_s2_m1_clock_cue1.gif" alt="T-maze, no memory, cue 1" width="150"></td>
-    <td align="center"><img src="examples/rocksample3_cpi_c0.86.gif" alt="RockSample with three rocks, CPI at c = 0.86" width="300"></td>
+    <td align="center"><img src="examples/learned_tmaze_L5_s0_m1_Z2_cue0.gif" alt="CPI with one memory bit, cue 0" width="150"></td>
+    <td align="center"><img src="examples/learned_tmaze_L5_s0_m1_Z2_cue1.gif" alt="CPI with one memory bit, cue 1" width="150"></td>
+    <td align="center"><img src="examples/learned_tmaze_L3_s4_m1_Z1_cue1.gif" alt="CPI without memory, cue 1" width="150"></td>
+    <td align="center"><img src="examples/learned_rocksample3_c0.86_lbscpi_ep0.gif" alt="LBS + CPI on RockSample with three rocks" width="300"></td>
   </tr>
   <tr>
-    <td align="center" colspan="2"><sub>The T-maze with one memory bit and no slack. The controller stores the cue,<br>takes the key of the cued side and reaches the cued goal for either cue.</sub></td>
-    <td align="center"><sub>No memory, slack 2.<br>For this cue the controller<br>steps back once, so its<br>position carries the cue.</sub></td>
-    <td align="center"><sub>RockSample with three rocks and CPI for (P2) at c = 0.86.<br>In this episode the agent samples the good rocks A and C,<br>leaves the bad rock B alone and exits east at X.<br>A ring marks a sampled rock.</sub></td>
+    <td align="center" colspan="2"><sub>CPI for (P1) with one memory bit (L = 5, no slack).<br>For cue 1 it sets z = 1 at the first step, and for either cue<br>it takes the key of the cued side and reaches the cued goal.</sub></td>
+    <td align="center"><sub>CPI for (P1) without memory<br>(L = 3, slack 4). It learned<br>to step back once for this cue,<br>so its position carries the cue.</sub></td>
+    <td align="center"><sub>LBS + CPI for (P2) on three rocks at c = 0.86.<br>The latch adds one bit, so z takes four values.<br>A dashed line marks a check and a ring a sampled rock.</sub></td>
   </tr>
 </table>
+<p align="center"><sub>Every policy shown was computed by the methods of the paper. Each frame shows the time t, the memory state z and the discounted return so far.</sub></p>
 
 ## The two problems
 
@@ -105,9 +105,9 @@ python run.py --kind cpi --task tmaze_L5_s2_m1 --memory-size 2 --start copy --ti
 # (P2) on RockSample with three rocks at c = 0.86, as in the paper
 python run.py --kind cpi --task rocksample3_tight --levels 0.86 --bad-rock-penalty 0 --seed 0
 
-# animate one episode of the policy that run saved
+# animate one episode of the policy that run saved (writes animations/<task>_seed0_ep0.gif)
 python env_animate.py rocksample3_tight --policy runs/single/<job id>/policy_0.86.npz \
-    --set bad_rock_penalty=0 --episode-seed 0 --out examples/rocksample3_cpi_c0.86.gif
+    --set bad_rock_penalty=0 --episode-seed 0 --annotate
 ```
 
 Each run writes `runs/single/<job id>/` with `result.json` (exact $`J_\varphi`$ and $`J_r`$), `log.json` (every sweep)
@@ -152,7 +152,7 @@ run again. [EXPERIMENTS.md](EXPERIMENTS.md#run-times) lists the run time of ever
 | `experiments.py`, `paper.py`, `suite.py` | Every experiment as a resumable job list, and the runner |
 | `run.py` | One method on one task and one seed |
 | `report_paper.py`, `plot_p2.py`, `plot_tmaze_slack.py`, `plot_tmaze_curves.py` | Tables, figures and in-text numbers from the run logs |
-| `env_visualize.py`, `env_animate.py` | Environment figures and GIF animations of single episodes |
+| `env_visualize.py`, `env_animate.py`, `make_gallery.py` | Environment figures, GIF animations of single episodes, and the gallery of learned policies |
 | `simulate.py`, `policies.py` | A simulator and controllers as functions |
 | `configs/` | Every preset as JSON |
 | `figures/`, `examples/` | Environment figures, example policies and GIFs |
@@ -160,15 +160,39 @@ run again. [EXPERIMENTS.md](EXPERIMENTS.md#run-times) lists the run time of ever
 
 ## Figures and animations
 
+`make_gallery.py` makes the animations of learned policies at the top of this page. It runs each method with its
+policy saved into `runs_gallery/`, picks episodes, and writes annotated GIFs to `examples/`.
+
 ```bash
-python env_visualize.py tmaze_L5_s2_m1 rocksample3 rocksample5            # writes figures/<task>_seed0.png
-python env_animate.py tmaze_L5_s0_m1 --memory-size 2 --policy examples/tmaze_L5_s0_m1_memory.pkl --episode-seed 0
-python env_animate.py tmaze_L5_s2_m1 --memory-size 1 --policy examples/tmaze_L5_s2_m1_clock.pkl --episode-seed 1
+python make_gallery.py                   # the T-maze and three-rock GIFs, about a minute
+python make_gallery.py --five-rocks      # also LBS + CPI on five rocks at c = 0.96, about 10 more minutes
+python make_gallery.py --only tmaze      # only the entries whose name starts with learned_tmaze
 ```
 
-The animations are GIFs written with Pillow, so ffmpeg is not needed. `--episode-seed` chooses the draw of the cue
-and of the rocks, and `--seed` chooses the key layout of the T-maze. In the RockSample frames a dashed line marks a
-check and a ring marks a sampled rock.
+To add an animation, append an entry to `GALLERY` in `make_gallery.py`. An entry is a file name, a job as in
+`paper.py` with `save=True`, and how to pick episodes (`'cues'` gives one episode per cue value, and `'check'` gives the
+first episode in which the agent checks a rock and $`\varphi`$ holds). Then reference the new GIF here with an
+`<img src="examples/<name>_<episode>.gif" width="150">` tag. Commit the GIFs in `examples/`, which are 40 to 60 KB
+each, and leave `runs_gallery/` and `animations/` out of the repository.
+
+For a single policy, `env_animate.py` takes any policy file that a run saved.
+
+```bash
+python env_animate.py tmaze_L5_s0_m1 --seed 0 --policy runs/single/<job id>/policy_P1.npz --annotate
+python env_animate.py rocksample3_tight --policy runs_gallery/gallery/<job id>/policy_bisect.npz \
+    --set bad_rock_penalty=0 --episode-seed 3 --annotate
+python env_visualize.py tmaze_L5_s2_m1 rocksample3 rocksample5            # the layouts, figures/<task>_seed0.png
+```
+
+- **Which file.** CPI saves `policy_P1.npz` for (P1) and `policy_<c>.npz` for (P2). LBS + CPI saves
+  `policy_bisect.npz`, which carries its own memory size and the latch as the initial memory distribution.
+- **Seeds.** `--seed` must be the seed of the run, because it places the keys of the T-maze. `--episode-seed` chooses
+  the cue and the rocks of the episode.
+- **Environment overrides.** Pass the same overrides as the run, such as `--set bad_rock_penalty=0` on RockSample.
+- **Frames.** `--annotate` adds the time, the memory state and the return to every frame, and says on the last frame
+  whether $`\varphi`$ holds. In RockSample a dashed line marks a check and a ring marks a sampled rock.
+- **Format.** The GIFs are written with Pillow, so ffmpeg is not needed. GitHub plays GIFs inline.
+- **Polar maze.** `env_visualize.py` has no drawing for the polar maze yet, so it has no animations.
 
 ## Citation
 
