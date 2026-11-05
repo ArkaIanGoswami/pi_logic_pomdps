@@ -14,7 +14,7 @@ produces. The extended result tables and the hardware the runs used are in the a
 
 ## Common settings
 
-- **Exact values.** Every value is computed exactly on the product model by the occupancy recursion. Nothing is
+- **Values.** Every value is computed on the product model by the occupancy recursion. Nothing is
   sampled, so a run with a given seed gives the same numbers on every machine up to floating-point round-off.
 - **Seeds.** Every method runs on seeds 0 to 49.
 - **Sweeps.** A sweep of CPI updates the stages backwards in time, from $`t=T`$ to $`t=1`$. At stage $`t`$ every row
