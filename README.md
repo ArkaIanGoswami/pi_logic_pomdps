@@ -11,14 +11,6 @@ POMDP with the automaton of $`\varphi`$, so nothing is sampled and every run is 
   <tr>
     <td align="center"><img src="examples/tmaze_L5_s0_m1_memory_cue0.gif" alt="T-maze, one memory bit, cue 0" width="150"></td>
     <td align="center"><img src="examples/tmaze_L5_s0_m1_memory_cue1.gif" alt="T-maze, one memory bit, cue 1" width="150"></td>
-    <td align="center"><img src="examples/tmaze_L5_s2_m1_clock_cue1.gif" alt="T-maze, no memory, cue 1" width="150"></td>
-    <td align="center"><img src="examples/rocksample3_cpi_c0.86.gif" alt="RockSample with three rocks, CPI at c = 0.86" width="300"></td>
-  </tr>
-  <tr>
-    <td align="center" colspan="2"><sub>The T-maze with one memory bit and no slack. The controller stores the cue,<br>takes the key of the cued side and reaches the cued goal for either cue.</sub></td>
-    <td align="center"><sub>No memory, slack 2.<br>For this cue the controller<br>steps back once, so its<br>position carries the cue.</sub></td>
-    <td align="center"><sub>RockSample with three rocks and CPI for (P2) at c = 0.86.<br>In this episode the agent samples the good rocks A and C,<br>leaves the bad rock B alone and exits east at X.<br>A ring marks a sampled rock.</sub></td>
-  </tr>
 </table>
 
 ## The two problems
