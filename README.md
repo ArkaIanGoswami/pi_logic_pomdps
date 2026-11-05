@@ -113,27 +113,5 @@ and the final policy as `.npz`.
 | `figures/`, `examples/` | Environment figures, example policies and GIFs |
 | `tests/` | Unit tests for the environments and the methods |
 
-## Figures and animations
 
-```bash
-python env_visualize.py tmaze_L5_s2_m1 rocksample3 rocksample5            # writes figures/<task>_seed0.png
-python env_animate.py tmaze_L5_s0_m1 --memory-size 2 --policy examples/tmaze_L5_s0_m1_memory.pkl --episode-seed 0
-python env_animate.py tmaze_L5_s2_m1 --memory-size 1 --policy examples/tmaze_L5_s2_m1_clock.pkl --episode-seed 1
-```
-
-The animations are GIFs written with Pillow, so ffmpeg is not needed. `--episode-seed` chooses the draw of the cue
-and of the rocks, and `--seed` chooses the key layout of the T-maze. In the RockSample frames a dashed line marks a
-check and a ring marks a sampled rock.
-
-## Citation
-
-```bibtex
-@inproceedings{goswami2027policy,
-  title     = {Policy Iteration for Logic-Constrained {POMDP}s under Fixed Memory Budgets},
-  author    = {Goswami, Arka Ian and Mahajan, Aditya},
-  booktitle = {Proceedings of the 9th Annual Learning for Dynamics and Control Conference},
-  series    = {Proceedings of Machine Learning Research},
-  year      = {2027},
-  note      = {Under review}
-}
 ```
