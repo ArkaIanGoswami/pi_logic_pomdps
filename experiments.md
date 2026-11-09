@@ -106,11 +106,6 @@ The route policy reaches $`J_\varphi=1`$ on every layout with $`W\ge2`$ and on n
 first finds such a policy at $`W=4`$, and there only for $`L=3`$. On longer corridors it finds one far less often, and
 lazy updates never find one.
 
-<p align="center">
-  <img src="reports_paper/figA_tmaze_slack.png" alt="Share of memoryless runs that reach satisfaction one, against the slack" width="55%"><br>
-  <sub>(P1) without memory and with start margin 1. The share of runs that reach J<sub>φ</sub> = 1, against the slack.</sub>
-</p>
-
 ## (P2) RockSample
 
 | | Grid | Rocks | Start | Horizon $`T`$ | Ceiling $`1-2^{-K}`$ | Thresholds $`c`$ | Product nodes |
