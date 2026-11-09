@@ -80,11 +80,6 @@ With $`\lvert\mathcal Z\rvert=2`$ all 5,600 runs reach $`J_\varphi=1`$ at both s
 number of sweeps grows from 12 at $`L=3`$ to 14 at $`L=20`$, and with lazy updates it is 3 at every length. Without
 memory only 165 of the 5,600 runs reach $`J_\varphi=1`$. All of them have $`\alpha=0.9`$, $`m=1`$ and $`W\ge4`$.
 
-<p align="center">
-  <img src="reports_paper/fig4_tmaze.png" alt="(P1) learning curves on the T-maze" width="90%"><br>
-  <sub>(P1) on the T-maze. The satisfaction probability after each sweep, one panel per corridor length.</sub>
-</p>
-
 ## Slack in place of memory
 
 With $`m\ge1`$ and $`W\ge2`$, a policy without memory can carry the cue in its position. It steps back at $`t=1`$ for one
@@ -293,27 +288,3 @@ interrupted once, so a call stopped early still counts.
 python suite.py --report                           # reports_paper/: T-maze, slack and polar-maze tables and figures, numbers.md
 python plot_p2.py --no-npg --cloud-ours-only       # reports_p2/: the RockSample table, both figures below and numbers_p2.md
 ```
-
-<p align="center">
-  <img src="reports_p2/fig_p2_curves.png" alt="(P2) learning curves on RockSample" width="56%">
-  <img src="reports_p2/fig_p2_front.png" alt="Reward against satisfaction on RockSample" width="42%">
-</p>
-<p align="center"><sub>Left: the best feasible J<sub>r</sub> within N sweeps at the tightest thresholds, and the same minus the median final J<sub>r</sub> of CPI. Right: J<sub>r</sub> against J<sub>φ</sub>. Dots are the two-node policies evaluated by any of our runs, ticks mark the best single policy found at each c, and markers are the median result of each method.</sub></p>
-
-## Run times
-
-The median time of one run, for one seed and one threshold, measured inside the run on a laptop with 14 runs in
-parallel. The times exclude building the product model, which happens once per task. CGCP on five rocks ran on a
-shared 28-core server.
-
-| | RS(5,3) | RS(5,5) | Polar maze |
-|---|---|---|---|
-| CPI, $`\lvert\mathcal Z\rvert=2`$ | 1.9 s | 31 s | 0.03 s |
-| CPI, $`\lvert\mathcal Z\rvert=4`$ | 7.5 s | 93 s | 0.08 s |
-| Trial-and-Error | 1.0 s | 12 s | |
-| LBS + CPI | 35 s | 10 min | 0.6 s |
-| CGCP, per threshold | 32 to 34 min | 2.8 to 4.2 h | under 1 s |
-| All runs of our methods | 2.0 CPU hours | 31.4 CPU hours | 7 CPU minutes |
-
-The T-maze takes under half a second per run. Its 11,200 runs take 8 CPU minutes, and the 4,400 runs without memory take
-4. One run of LBS + CPI on five rocks needs about 200 MB of memory.
