@@ -1,7 +1,4 @@
-# Policy Iteration for Logic-Constrained POMDPs under Fixed Memory Budgets
-
-This repository contains the code and the experiment configurations for the paper
-*Policy Iteration for Logic-Constrained POMDPs under Fixed Memory Budgets* (L4DC 2027, under review).
+# Agent-State Policy Iteration for Logic-Constrained POMDPs
 
 The agent acts in a POMDP whose task is a temporal-logic specification $`\varphi`$. Its controller has a fixed, declared
 memory $`\mathcal Z`$ that is chosen before planning. Every value in the paper is computed exactly on the product of the
