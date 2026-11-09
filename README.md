@@ -33,10 +33,10 @@ J_\varphi(\pi)=\mathbb P^\pi\big(L(Y_1)\,L(Y_2)\cdots L(Y_T)\models\varphi\big).
 | Method | What it does | Code |
 |---|---|---|
 | CPI | Conservative policy iteration with backward Gauss–Seidel sweeps. For (P1) each stage is greedy on the satisfaction value. For (P2) each stage is greedy on $`Q_r+\lambda_t Q_\varphi`$ with the smallest stage multiplier $`\lambda_t`$ that keeps $`J_\varphi\ge c`$ (Proposition 2), so every step after the first feasible one stays feasible. | `cpi.py` |
-| LBS | Bisection on the multiplier of $`L_\lambda=J_r+\lambda J_\varphi`$ (Algorithm 2). It returns a latched mixture of two policies that uses one extra memory bit and meets $`J_\varphi=c`$ exactly, with the certificate of Theorem 4. | `pricing.py` |
-| LBS + CPI | CPI on the output of LBS, with the latch bit as part of the memory. | `pricing.py` |
+| LBS | Bisection on the multiplier of $`L_\lambda=J_r+\lambda J_\varphi`$ (Algorithm 2). It returns a latched mixture of two policies that uses one extra memory bit and meets $`J_\varphi=c`$ exactly, with the certificate of Theorem 4. | `lbs.py` |
+| LBS + CPI | CPI on the output of LBS, with the latch bit as part of the memory. | `lbs.py` |
 | Trial-and-Error | The same schedule as CPI, but each stage moves toward the reward-greedy rule with the largest step that keeps $`J_\varphi\ge c`$. | `cpi.py` |
-| CGCP | Column generation over belief-space policies (Walraven and Spaan, 2018) with SARSOP pricing. It has no memory budget and gives an upper bound over all policies. | `cgcp_sarsop.py`, `cgcp_belief.py` |
+| CGCP | Column generation over belief-space policies (Walraven and Spaan, 2018) with SARSOP multipliers. It has no memory budget and gives an upper bound over all policies. | `cgcp_sarsop.py`, `cgcp_belief.py` |
 
 For LBS the mixture weight, the guarantee and the certificate are
 
@@ -99,8 +99,8 @@ and the final policy as `.npz`.
 | `tasks.py` | `make_task` and every preset (`python tasks.py --list`) |
 | `product.py` | The exact product model as sparse matrices, and exact evaluation of a policy |
 | `cpi.py` | CPI for (P1) and (P2), Trial-and-Error, the starting policies and policy files |
-| `pricing.py` | LBS, its certificate and the CPI polish |
-| `cgcp_sarsop.py`, `cgcp_belief.py` | CGCP with SARSOP pricing, and exact evaluation of belief-space policies |
+| `lbs.py` | LBS, its certificate and the CPI polish |
+| `cgcp_sarsop.py`, `cgcp_belief.py` | CGCP with SARSOP multipliers, and exact evaluation of belief-space policies |
 | `cheap_bounds.py` | The fully observable and fast informed upper bounds on RockSample |
 | `tmaze_route.py` | The memoryless route policy that carries the cue in its position |
 | `tgap_search.py` | The best policy found in $`\Pi`$ where $`v_2(c)`$ has no closed form |
